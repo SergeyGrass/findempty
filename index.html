@@ -4,82 +4,7 @@
   <meta charset="UTF-8">
   <title>Разминка на концентрацию внимания</title>
   <link rel="stylesheet" href="bootstrap.min.css">
-  <style>
-  @font-face {
-    font-family: 'corkiregular';
-    src: url('fonts/Corki-Regular-webfont.eot');
-    src: url('fonts/Corki-Regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('fonts/Corki-Regular-webfont.woff2') format('woff2'),
-         url('fonts/Corki-Regular-webfont.woff') format('woff'),
-         url('fonts/Corki-Regular-webfont.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-  }
-  .header {
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-  h1 {
-    color: white;
-    background: #e85139;
-    font-family: 'corkiregular';
-    line-height: 1.4em;
-    text-align: center;
-    text-transform: uppercase;
-    float:left;
-    overflow:hidden;
-    margin: 0;
-  }
-  .ribbon:after, .ribbon:before {
-    margin-top:0;
-    content: "";
-    float:left;
-    border:1.8em solid #e85139;
-  }
-  .ribbon:after {
-    border-right-color:transparent;
-    margin-right: -3em;
-  }
-  .ribbon:before {
-    border-left-color:transparent;
-    margin-left: -3em;
-  }
-  .controls {
-    background: #eee;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    text-align: center;
-  }
-  .controls .btn {
-    width: 100%;
-  }
-  #output {
-    width: 890px;
-    height: 630px;
-    margin: 0 auto;
-    padding: 5px;
-    background: #eceff4;
-    font: 1.3em times;
-    margin-bottom: 10px;
-  }
-  #output span {
-    cursor: pointer;
-    width: 22px;
-    height: 34px;
-    display: inline-block;
-  }
-  #output.columns {
-    width: 750px;
-    height: 500px;
-  }
-  #timer {
-    margin-top: 20px;
-    width: 100%;
-    height: 100px;
-    text-align: left;
-    font-size: 1.2em;
-  }
-  </style>
+  <link rel="stylesheet" href="style.css">
   <script>
   var timer;
   var interval;
@@ -101,7 +26,23 @@
 
   function timer_stop(){
     clearInterval(interval);
-    document.getElementById("timer").innerHTML = "Вы нашли пустую колбу за <b>" + timer + "</b> секунд";
+
+    var variation = "";
+    var timer_rank = timer % 10;
+    if (timer >= 5 && timer <= 20) {
+      variation = "секунд";
+    }
+    else if (timer_rank == 1){
+      variation = "секунду";
+    }
+    else if (timer_rank >= 2 && timer_rank <= 4) {
+      variation = "секунды";
+    }
+    else {
+      variation = "секунд";
+    }
+
+    document.getElementById("timer").innerHTML = "Вы нашли пустую колбу за <b>" + timer + "</b> " + variation;
   };
 
   function findEmptyFlask(){
@@ -116,11 +57,11 @@
     var dim = [];
     if (layout === 'columns'){
       dim[0] = 30;
-      dim[1] = 10;
+      dim[1] = 12;
     }
     else {
       dim[0] = 40;
-      dim[1] = 18;
+      dim[1] = 15;
     }
     var place = [parseInt(Math.random() * dim[0]), 
                  parseInt(Math.random() * dim[1])];
@@ -170,10 +111,10 @@
         <button onclick="findEmptyFlask();" class="btn btn-primary btn-lg">Начать заново</button>
         <hr>
         <p>Сменить раскладку</p>
-        <button onclick="changeLayout('continuous');" class="btn btn-success">Сплошная (40x18)</button>
+        <button onclick="changeLayout('continuous');" class="btn btn-success">Сплошная (40x15)</button>
         <br>
         <br>
-        <button onclick="changeLayout('columns');" class="btn btn-info">В 3 колонки (30x10)</button>
+        <button onclick="changeLayout('columns');" class="btn btn-info">В 3 колонки (30x12)</button>
         <div id="timer"></div>
       </div><!-- /.controls -->
       <div class="col-md-6">
@@ -181,6 +122,5 @@
       </div>
     </div><!-- /.row -->
   </div><!-- /.container -->
-<!-- <script src="bootstrap.min.js"></script> -->
 </body>
 </html>
