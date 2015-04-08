@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Разминка на концентрацию внимания</title>
+  <link rel="stylesheet" href="bootstrap.min.css">
+  <style>
+  @font-face {
+    font-family: 'corkiregular';
+    src: url('fonts/Corki-Regular-webfont.eot');
+    src: url('fonts/Corki-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/Corki-Regular-webfont.woff2') format('woff2'),
+         url('fonts/Corki-Regular-webfont.woff') format('woff'),
+         url('fonts/Corki-Regular-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  .header {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  h1 {
+    color: white;
+    background: #e85139;
+    font-family: 'corkiregular';
+    line-height: 1.4em;
+    text-align: center;
+    text-transform: uppercase;
+    float:left;
+    overflow:hidden;
+    margin: 0;
+  }
+  .ribbon:after, .ribbon:before {
+    margin-top:0;
+    content: "";
+    float:left;
+    border:1.8em solid #e85139;
+  }
+  .ribbon:after {
+    border-right-color:transparent;
+    margin-right: -3em;
+  }
+  .ribbon:before {
+    border-left-color:transparent;
+    margin-left: -3em;
+  }
+  .controls {
+    background: #eee;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+  }
+  .controls .btn {
+    width: 100%;
+  }
+  #output {
+    width: 890px;
+    height: 700px;
+    margin: 0 auto;
+    padding: 5px;
+    background: #eceff4;
+    font: 1.3em times;
+    margin-bottom: 10px;
+  }
+  #output span {
+    cursor: pointer;
+    width: 22px;
+    height: 34px;
+    display: inline-block;
+  }
+  #output.columns {
+    width: 750px;
+    height: 500px;
+  }
+  #timer {
+    margin-top: 20px;
+    width: 100%;
+    height: 100px;
+    text-align: left;
+    font-size: 1.2em;
+  }
+  </style>
+  <script>
+  var timer;
+  var interval;
+  var layout = 'continuous';
+
+  function changeLayout(l){
+    layout = l;
+    document.getElementById("output").className = l;
+    findEmptyFlask();
+  }
+
+  function timer_start(){
+    document.getElementById("timer").innerHTML = '';
+    timer = 0;
+    interval = setInterval(function(){
+      timer += 1;
+    }, 1000);
+  };
+
+  function timer_stop(){
+    clearInterval(interval);
+    document.getElementById("timer").innerHTML = "Вы нашли пустую колбу за <b>" + timer + "</b> секунд";
+  };
+
+  function findEmptyFlask(){
+    clearInterval(interval);
+    var outDiv = document.getElementById("output");
+    var ch_nodes = outDiv.childNodes;
+    while(ch_nodes.length){
+      outDiv.removeChild(ch_nodes[0]);
+    }
+
+    //--------------------------------------------// 
+    var dim = [];
+    if (layout === 'columns'){
+      dim[0] = 30;
+      dim[1] = 10;
+    }
+    else {
+      dim[0] = 40;
+      dim[1] = 20;
+    }
+    var place = [parseInt(Math.random() * dim[0]), 
+                 parseInt(Math.random() * dim[1])];
+
+    for (var i = 0; i < dim[1]; i++){
+      for (var j = 0; j < dim[0]; j++){
+        if (layout === 'columns' && j % 10 == 0){
+          var span = document.createElement("span");
+          span.appendChild(document.createTextNode(""))
+          outDiv.appendChild(span);
+        }
+        var imgspan = document.createElement("span");
+        imgspan.setAttribute("id", String.fromCharCode(65 + i) + j);
+        outDiv.appendChild(imgspan);
+        var image = document.createElement("img");
+        if (i == place[1] && j == place[0]){
+          imgspan.setAttribute("onclick", "clickHandler(this)");
+          image.src = "img/empty.png";
+        } else {
+          image.src = "img/full.png";
+        }
+        imgspan.appendChild(image);
+      }
+      outDiv.appendChild(document.createElement("br"));
+    }
+    timer_start();
+  };
+
+  var clickHandler = function(el){
+    timer_stop();
+  };
+
+  document.addEventListener("DOMContentLoaded", findEmptyFlask);
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3 header">
+        <div class="ribbon"><h1>Разминка на концентрацию внимания</h1></div>
+      </div><!-- /.header -->
+    </div><!-- /.row -->
+    <div class="row">
+      <div class="col-md-2 controls">
+        <p class="text-left">Когда найдете пустую колбу, кликнике на нее мышкой</p>
+        <br>
+        <button onclick="findEmptyFlask();" class="btn btn-primary btn-lg">Начать заново</button>
+        <hr>
+        <p>Сменить раскладку</p>
+        <button onclick="changeLayout('continuous');" class="btn btn-success">Сплошная (40x20)</button>
+        <br>
+        <br>
+        <button onclick="changeLayout('columns');" class="btn btn-info">В 3 колонки (30x10)</button>
+        <div id="timer"></div>
+      </div><!-- /.controls -->
+      <div class="col-md-6">
+        <div id="output"></div>
+      </div>
+    </div><!-- /.row -->
+  </div><!-- /.container -->
+<!-- <script src="bootstrap.min.js"></script> -->
+</body>
+</html>
