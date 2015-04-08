@@ -1,0 +1,72 @@
+@font-face {
+  font-family: 'corkiregular';
+  src: url('fonts/Corki-Regular-webfont.eot');
+  src: url('fonts/Corki-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+       url('fonts/Corki-Regular-webfont.woff2') format('woff2'),
+       url('fonts/Corki-Regular-webfont.woff') format('woff'),
+       url('fonts/Corki-Regular-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+.header {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+h1 {
+  color: white;
+  background: #e85139;
+  font-family: 'corkiregular';
+  line-height: 42px;
+  text-align: center;
+  text-transform: uppercase;
+  float:left;
+  overflow:hidden;
+  margin: 0;
+}
+.ribbon:after, .ribbon:before {
+  margin-top:0;
+  content: "";
+  float:left;
+  border:1.5em solid #e85139;
+}
+.ribbon:after {
+  border-right-color:transparent;
+  margin-right: -3em;
+}
+.ribbon:before {
+  border-left-color:transparent;
+  margin-left: -3em;
+}
+.controls {
+  background: #eee;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  text-align: center;
+}
+.controls .btn {
+  width: 100%;
+}
+#output {
+  width: 890px;
+  height: 530px;
+  margin: 0 auto;
+  padding: 5px;
+  background: #eceff4;
+  font: 1.3em times;
+  margin-bottom: 10px;
+}
+#output span {
+  cursor: pointer;
+  width: 22px;
+  display: inline-block;
+}
+#output.columns {
+  width: 750px;
+  height: 425px;
+}
+#timer {
+  margin-top: 20px;
+  width: 100%;
+  height: 50px;
+  font-size: 1.2em;
+}
